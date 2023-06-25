@@ -36,6 +36,8 @@ app.get('/go/*', (req, res) => {
   const shortUrl = req.params[0];
   const longUrl = urlDatabase[shortUrl];
 
+  console.log('urlDatabase:', urlDatabase); // Debug info
+
   if (!longUrl) {
     return res.status(404).send({ error: "Short URL '" + shortUrl + "' not found" });
   }
