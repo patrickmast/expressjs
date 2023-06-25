@@ -27,6 +27,7 @@ app.post('/shorten', (req, res) => {
   const shortUrl = generateShortId();
 
   urlDatabase[shortUrl] = longUrl;
+  console.log('urlDatabase(1):', urlDatabase); // Debug info
 
   return res.status(201).send({ shortUrl });
 });
@@ -36,7 +37,7 @@ app.get('/go/*', (req, res) => {
   const shortUrl = req.params[0];
   const longUrl = urlDatabase[shortUrl];
 
-  console.log('urlDatabase:', urlDatabase); // Debug info
+  console.log('urlDatabase(2):', urlDatabase); // Debug info
 
   if (!longUrl) {
     return res.status(404).send({ error: "Short URL '" + shortUrl + "' not found" });
