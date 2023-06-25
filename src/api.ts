@@ -7,7 +7,6 @@ app.use(cors({ origin: true }));
 app.use(express.json());
 
 const urlDatabase = {};
-let idCounter = 1;
 
 // Custom function to generate short IDs
 function generateShortId() {
