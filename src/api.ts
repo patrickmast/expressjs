@@ -39,7 +39,7 @@ app.get('/go/:shortUrl', (req, res) => {
   if (!longUrl) {
   //return res.status(404).send({ error: 'Short URL not found' });
   //return res.status(404).send({ error: 'Short URL not found', shortUrl: shortUrl });
-    return res.status(404).send({ error: "Short URL '${shortUrl}' not found" });
+    return res.status(404).send({ error: "Short URL ${shortUrl} not found" });
   }
 
   return res.redirect(301, longUrl);
