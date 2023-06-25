@@ -32,8 +32,8 @@ app.post('/shorten', (req, res) => {
 });
 
 // Endpoint to redirect a short URL to the original URL
-app.get('/go/:shortUrl', (req, res) => {
-  const shortUrl = decodeURIComponent(req.params.shortUrl);
+app.get('/go/*', (req, res) => {
+  const shortUrl = req.params[0];
   const longUrl = urlDatabase[shortUrl];
 
   if (!longUrl) {
