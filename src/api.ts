@@ -1,25 +1,40 @@
 import express from 'express';
 import cors from 'cors';
+import shortid from 'shortid';
 
 export const app = express();
 
 app.use(cors({ origin: true }));
 
 app.use(express.json());
-app.use(express.raw({ type: 'application/vnd.custom-type' }));
-app.use(express.text({ type: 'text/html' }));
+
+const urlDatabase = {};
+
+// Endpoint to shorten a URL
+app.post('/shorten', (req, res) => {
+  const longUrl = req.body.url;
+  const shortUrl = shortid.generate();
+
+  urlDatabase[shortUrl] = longUrl;
+
+  res.status(201).send({ shortUrl });
+});
+
+// Endpoint to redirect a short URL to the original URL
+app.get('/:shortUrl', (req, res) => {
+  const { shortUrl } = req.params;
+  const longUrl = urlDatabase[shortUrl];
+
+  if (!longUrl) {
+    return res.status(404).send({ error: 'Short URL not found' });
+  }
+
+  res.redirect(301, longUrl);
+});
 
 // Healthcheck endpoint
 app.get('/', (req, res) => {
   res.status(200).send({ status: 'Connected. Welcome!' });
 });
 
-const api = express.Router();
-
-api.get('/hello', (req, res) => {
-  res.status(200).send({ message: 'hello world' });
-});
-
-// Version the api
-// app.use('/api/v1', api);
-// app.use('/',api);
+export default app;
