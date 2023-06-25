@@ -22,4 +22,4 @@ api.get('/hello', (req, res) => {
 
 // Version the api
 // app.use('/api/v1', api);
-app.use('/',api);
+// app.use('/',api);
